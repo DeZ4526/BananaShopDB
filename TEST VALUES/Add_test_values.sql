@@ -47,5 +47,7 @@ SELECT * FROM Users;
 
 SELECT Add_Balance(11, 1, 'TEST1', 1005, 'login: 1123, pass:1111', false);
 SELECT Add_Order(11, 1, 'login: 1123, pass:1111');
+SELECT Get_Order(2, 1);
+SELECT Done_Order(1);
 SELECT * FROM Orders;
 SELECT * FROM Balance_log;

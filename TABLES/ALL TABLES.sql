@@ -68,11 +68,12 @@ CREATE TABLE Balance_log
 CREATE TABLE Orders
 ( 
 	id_p_log SERIAL NOT NULL PRIMARY KEY,
-	id_user bigint NOT NULL,
-	id_product int NOT NULL,
-  	information text NOT NULL,
-	date_time timestamp NOT NULL,
-  	is_done bool,
+	id_user bigint NOT NULL, --id пользователя, что сделал заказ
+	id_product int NOT NULL, --id продукта
+  	information text NOT NULL, --информация о заказе
+	date_time timestamp NOT NULL, --дата заказа
+  	is_done bool, --статус заказа выполнен/не выполнен
+	id_admin bigint, --id админа, что взял заказ
 	FOREIGN KEY(id_user) REFERENCES Users(id_user),
 	FOREIGN KEY(id_product) REFERENCES Products(id_product)
 );

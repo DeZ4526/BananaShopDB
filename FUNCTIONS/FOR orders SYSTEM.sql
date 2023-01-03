@@ -1,9 +1,9 @@
 --Взять заказ
-CREATE FUNCTION Done_Order(_id_order bigint) RETURNS bool AS $$
+CREATE FUNCTION Get_Order(_id_order bigint, _id_admin bigint) RETURNS bool AS $$
 BEGIN
-	IF (SELECT Count(*) FROM Orders WHERE id_p_log = _id_order) = 1
+	IF (SELECT Count(*) FROM Orders WHERE id_p_log = _id_order AND id_admin IS NULL) = 1
 	THEN
-		UPDATE Orders SET is_done=true WHERE id_p_log = _id_order;
+		UPDATE Orders SET id_admin=_id_admin WHERE id_p_log = _id_order;
 		RETURN true;
 	ELSE
 		RETURN false;
