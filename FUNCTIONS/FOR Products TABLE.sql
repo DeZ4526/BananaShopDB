@@ -35,6 +35,7 @@ BEGIN
 	END IF;
 END;
 $$ LANGUAGE plpgsql;
+
 --Изменить описание товара
 CREATE FUNCTION Set_Description_Product(_id_product int, new_des text) RETURNS bool AS $$
 BEGIN

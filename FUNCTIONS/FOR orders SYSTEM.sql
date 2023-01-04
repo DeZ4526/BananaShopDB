@@ -82,6 +82,32 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+--Пополнить баланс через админ панель
+CREATE FUNCTION Add_Balance_admin(_id_user bigint, _requisites text, _value numeric) RETURNS bool AS $$
+DECLARE
+    _first_add bool;
+BEGIN
+	IF (SELECT Count(*) FROM users WHERE id_user = _id_user) = 0 THEN
+		RETURN false;
+	END IF;
+		IF (SELECT Count(*) FROM Balance_log WHERE id_user = _id_user) = 0  THEN
+		_first_add = true;
+	ELSE
+		_first_add = false;
+	END IF;
+	
+	IF(SELECT count(*) FROM Purchase_methods WHERE title='ADMIN') = 0 THEN
+		PERFORM Add_Purchase_method('ADMIN', 'admin');
+	END IF;
+	
+	INSERT INTO Balance_log (id_user, id_p_method ,requisites ,value ,description ,date_time,use_bonus, first_add) VALUES 
+	(_id_user, (SELECT SUM(id_p_method) FROM Purchase_methods WHERE title='ADMIN'),_requisites,_value,'ADMIN', now(), false, _first_add);
+	UPDATE users SET balance=balance+_value, ref_balance = ref_balance+_value WHERE id_user = _id_user;
+	RETURN true;
+END;
+$$ LANGUAGE plpgsql;
+
+
 --Пополнить баланс
 CREATE FUNCTION Add_Balance(_id_user int, id_purchase_method int, _requisites text, _value numeric, _description text, use_bonus bool) RETURNS bool AS $$
 DECLARE
