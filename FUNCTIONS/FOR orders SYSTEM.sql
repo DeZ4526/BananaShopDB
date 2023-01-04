@@ -44,7 +44,7 @@ BEGIN
 		WHERE id_user = _id_user;
 		
 		RETURN Add_Balance_ref(_id_ref, 
-							   'REF', 
+							   CAST (_id_user AS text), 
 							   ((SELECT price FROM Products WHERE _id_product = id_product)/ 100 * (SELECT ref_percent FROM Users WHERE id_user =_id_ref)));
 		
 		--!UPDATE Users SET 
@@ -59,9 +59,16 @@ $$ LANGUAGE plpgsql;
 
 --Пополнить баланс через реферальную систему 
 CREATE FUNCTION Add_Balance_ref(_id_user bigint, _requisites text, _value numeric) RETURNS bool AS $$
+DECLARE
+    _first_add bool;
 BEGIN
 	IF (SELECT Count(*) FROM users WHERE id_user = _id_user) = 0 THEN
 		RETURN false;
+	END IF;
+		IF (SELECT Count(*) FROM Balance_log WHERE id_user = _id_user) = 0  THEN
+		_first_add = true;
+	ELSE
+		_first_add = false;
 	END IF;
 	
 	IF(SELECT count(*) FROM Purchase_methods WHERE title='REFERAL_SYSTEM') = 0 THEN
@@ -69,7 +76,7 @@ BEGIN
 	END IF;
 	
 	INSERT INTO Balance_log (id_user, id_p_method ,requisites ,value ,description ,date_time,use_bonus, first_add) VALUES 
-	(_id_user, (SELECT SUM(id_p_method) FROM Purchase_methods WHERE title='REFERAL_SYSTEM'),_requisites,_value,'REFERAL_SYSTEM', now(), false, false);
+	(_id_user, (SELECT SUM(id_p_method) FROM Purchase_methods WHERE title='REFERAL_SYSTEM'),_requisites,_value,'REFERAL_SYSTEM', now(), false, _first_add);
 	UPDATE users SET balance=balance+_value, ref_balance = ref_balance+_value WHERE id_user = _id_user;
 	RETURN true;
 END;

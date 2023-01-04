@@ -1,10 +1,10 @@
 --Добавление продукта
-CREATE FUNCTION Add_Product(_title text, _price numeric, category int) RETURNS bool AS $$
+CREATE FUNCTION Add_Product(_title text,_description text, _price numeric, category int) RETURNS bool AS $$
 BEGIN
 	IF ((SELECT Count(*) FROM Product_categories WHERE id_category = category) = 1 AND
 	   (SELECT Count(*) FROM Products WHERE title = _title) = 0
 	   )THEN
-		INSERT INTO Products (title, price, id_category) VALUES (_title, _price, category);
+		INSERT INTO Products (title, price, description, id_category) VALUES (_title, _price, _description, category);
 		RETURN true;
 	ELSE
 		RETURN false;
@@ -29,6 +29,18 @@ BEGIN
 	IF (SELECT Count(*) FROM Products WHERE id_product = _id_product) = 1
 	THEN
 		UPDATE Products SET price=new_price WHERE id_product = _id_product;
+		RETURN true;
+	ELSE
+		RETURN false;
+	END IF;
+END;
+$$ LANGUAGE plpgsql;
+--Изменить описание товара
+CREATE FUNCTION Set_Description_Product(_id_product int, new_des text) RETURNS bool AS $$
+BEGIN
+	IF (SELECT Count(*) FROM Products WHERE id_product = _id_product) = 1
+	THEN
+		UPDATE Products SET description=new_des WHERE id_product = _id_product;
 		RETURN true;
 	ELSE
 		RETURN false;
