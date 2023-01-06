@@ -13,15 +13,17 @@ CREATE TABLE Users
 	id_user bigint NOT NULL PRIMARY KEY, --id пользователя в ТГ
 	id_type int NOT NULL, --тип из списка типов
 	id_referral int, --id того, от кого реферальная ссылка
-  	login text NOT NULL, --логин в ТГ
+	login text, --username пользователя
   	balance numeric NOT NULL, --баланс
 	pur_balance numeric NOT NULL, --баланс от пополнений
 	bonus int, --Использовать бонус 10% к пополнению (кол-во бонусов)
+	date_time timestamp not NULL
 	ref_balance numeric NOT NULL, --баланс от рефералов
 	ref_percent int NOT NULL, --процент от покупок рефералов
 	FOREIGN KEY(id_type) REFERENCES User_types(id_type),
 	FOREIGN KEY(id_referral) REFERENCES Users(id_user)
 );
+
 --Таблица категорий товаров
 CREATE TABLE Product_categories
 ( 
