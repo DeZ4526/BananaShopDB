@@ -30,7 +30,7 @@ $$ LANGUAGE plpgsql;
 
 CREATE FUNCTION Edit_Precent_RS(_id_user bigint, _ref_percent int) RETURNS bool AS $$
 BEGIN
-	IF (SELECT Count(*) FROM Users WHERE id_user = _id_user) = 0  THEN
+	IF (SELECT Count(*) FROM Users WHERE id_user = _id_user) = 1  THEN
 		UPDATE Users SET ref_percent = _ref_percent WHERE id_user = _id_user;
 		RETURN true;
 	ELSE
