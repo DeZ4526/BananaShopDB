@@ -79,3 +79,16 @@ CREATE TABLE Orders
 	FOREIGN KEY(id_user) REFERENCES Users(id_user),
 	FOREIGN KEY(id_product) REFERENCES Products(id_product)
 );
+
+--таблица вывода средств
+CREATE table Withdraws
+(
+	id_w_log SERIAL not null primary key,
+	id_user BIGINT not null,
+	pay_type text not null,
+	rekvisits text not null,
+	id_operator bigint default 0,
+	date_time timestamp not null,
+	is_done bool,
+	FOREIGN KEY(id_user) REFERENCES Users(id_user)
+);
