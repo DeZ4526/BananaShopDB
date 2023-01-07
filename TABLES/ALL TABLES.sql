@@ -17,9 +17,10 @@ CREATE TABLE Users
   	balance numeric NOT NULL, --баланс
 	pur_balance numeric NOT NULL, --баланс от пополнений
 	bonus int, --Использовать бонус 10% к пополнению (кол-во бонусов)
-	date_time timestamp not NULL
+	date_time timestamp not null,
 	ref_balance numeric NOT NULL, --баланс от рефералов
 	ref_percent int NOT NULL, --процент от покупок рефералов
+	reviews_count int default 0 not null,
 	FOREIGN KEY(id_type) REFERENCES User_types(id_type),
 	FOREIGN KEY(id_referral) REFERENCES Users(id_user)
 );
