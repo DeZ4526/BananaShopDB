@@ -25,7 +25,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 --Добавить заказ
-CREATE FUNCTION Add_Order(_id_user int, _id_product int, _information text) RETURNS bool AS $$
+create FUNCTION Add_Order(_id_user bigint, _id_product int, _information text) RETURNS bool AS $$
 DECLARE
     _id_ref bigint;
 BEGIN
@@ -40,8 +40,9 @@ BEGIN
 		_id_ref = (SELECT id_referral FROM Users WHERE id_user = _id_user);
 		
 		UPDATE Users SET 
-		balance = balance - (SELECT price FROM Products WHERE _id_product = id_product)
+		balance = balance - (SELECT price FROM Products WHERE _id_product = id_product), reviews_count = reviews_count + 1
 		WHERE id_user = _id_user;
+		
 		
 		RETURN Add_Balance_ref(_id_ref, 
 							   CAST (_id_user AS text), 
