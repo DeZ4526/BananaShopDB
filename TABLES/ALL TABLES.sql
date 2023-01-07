@@ -81,12 +81,13 @@ CREATE TABLE Orders
 );
 
 --таблица вывода средств
-CREATE table Withdraws
+create table Withdraws
 (
 	id_w_log SERIAL not null primary key,
 	id_user BIGINT not null,
 	pay_type text not null,
 	rekvisits text not null,
+	value numeric not null,
 	id_operator bigint default 0,
 	date_time timestamp not null,
 	is_done bool,
