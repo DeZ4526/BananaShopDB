@@ -61,3 +61,16 @@ BEGIN
 	END IF;
 END;
 $$ LANGUAGE plpgsql;
+
+--Добавить картинку
+CREATE FUNCTION Set_JSON_IMG_Product(_id_product int, _json text) RETURNS bool AS $$
+BEGIN
+	IF (SELECT Count(*) FROM Products WHERE id_product = _id_product) = 1
+	THEN
+		UPDATE Products SET json_img=_json WHERE id_product = _id_product;
+		RETURN true;
+	ELSE
+		RETURN false;
+	END IF;
+END;
+$$ LANGUAGE plpgsql;
