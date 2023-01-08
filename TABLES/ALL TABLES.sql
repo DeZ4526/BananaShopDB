@@ -40,6 +40,7 @@ CREATE TABLE Products
 	id_category int NOT NULL,
   	title text NOT NULL,
 	description text,
+	JSON_IMG text,
   	price numeric,
 	FOREIGN KEY(id_category) REFERENCES Product_categories(id_category)
 );
@@ -82,7 +83,7 @@ CREATE TABLE Orders
 );
 
 --таблица вывода средств
-create table Withdraws
+CREATE TABLE Withdraws
 (
 	id_w_log SERIAL not null primary key,
 	id_user BIGINT not null,
