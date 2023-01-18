@@ -139,7 +139,7 @@ BEGIN
 	
 	INSERT INTO Balance_log (id_user, id_p_method ,requisites ,value ,description ,date_time,use_bonus, first_add) VALUES 
 	(_id_user, (SELECT SUM(id_p_method) FROM Purchase_methods WHERE title='ADMIN'),_requisites,_value,'ADMIN', now(), false, _first_add);
-	UPDATE users SET balance=balance+_value, ref_balance = ref_balance+_value WHERE id_user = _id_user;
+	UPDATE users SET balance=balance+_value WHERE id_user = _id_user;
 	RETURN true;
 END;
 $$ LANGUAGE plpgsql;
