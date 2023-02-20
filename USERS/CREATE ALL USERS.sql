@@ -22,7 +22,7 @@ GRANT SELECT, INSERT, UPDATE ON Withdraws TO master_banan;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO master_banan;
 
 --Удалить роль
-REVOKE ALL ON DATABASE bananashop FROM Operator;
+REVOKE ALL ON DATABASE shop FROM Operator;
 REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA public FROM Operator;
 drop user Operator;
 --Просмотреть роли
