@@ -32,7 +32,7 @@ CREATE TABLE Product_categories
 	id_category_top int,
   	title text NOT NULL,
   	description text,
-	photo text
+	photo text -- прямая ссылка на фото
 );
 --Таблица товаров
 CREATE TABLE Products
