@@ -31,7 +31,8 @@ CREATE TABLE Product_categories
 	id_category SERIAL NOT NULL PRIMARY KEY,
 	id_category_top int,
   	title text NOT NULL,
-  	description text
+  	description text,
+	photo text
 );
 --Таблица товаров
 CREATE TABLE Products
