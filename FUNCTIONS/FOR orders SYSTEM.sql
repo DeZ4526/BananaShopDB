@@ -84,7 +84,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 --Пополнить баланс
-CREATE FUNCTION Add_Balance(_id_user int, id_purchase_method int, _requisites text, _value numeric, _description text, use_bonus bool) RETURNS bool AS $$
+CREATE FUNCTION Add_Balance(_id_user bigint, id_purchase_method int, _requisites text, _value numeric, _description text, use_bonus bool) RETURNS bool AS $$
 DECLARE
     _first_use bool;
 BEGIN
