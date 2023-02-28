@@ -45,3 +45,16 @@ BEGIN
 	END IF;
 END;
 $$ LANGUAGE plpgsql;
+
+--Изменить описание категории продуктов
+CREATE FUNCTION Set_Description_ProductCategory(_id_category int, new_description text) RETURNS bool AS $$
+BEGIN
+	IF (SELECT Count(*) FROM Product_categories WHERE id_category = _id_category) = 1
+	THEN
+		UPDATE Product_categories SET description=new_description WHERE id_category = _id_category;
+		RETURN true;
+	ELSE
+		RETURN false;
+	END IF;
+END;
+$$ LANGUAGE plpgsql;
